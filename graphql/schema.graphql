@@ -55,7 +55,7 @@ type Statistic {
 
 type Query {
   projects: [Project]
-  releaseDetails(appName: String, cacheId: String): Release
+  releaseDetails(appName: String, cacheId: String): Release @cacheControl(scope: PRIVATE)
   releases(appName: String = "", page: Int = 1, endDate: String = ""): [Release] @cacheControl(scope: PRIVATE)
   releasesNotes(page: Int = 1): [ReleaseNote]
   statistic(appName: String = ""): Statistic
