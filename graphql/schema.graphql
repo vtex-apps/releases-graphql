@@ -53,6 +53,10 @@ type Statistic {
   preReleaseLast30Days: Int
 }
 
+type Mutation {
+  saveBuildResults(appId: String, build: String, buildId: String, commitId: String, log: String status: String): String
+}
+
 type Query {
   projects: [Project]
   releaseDetails(appName: String, cacheId: String): Release

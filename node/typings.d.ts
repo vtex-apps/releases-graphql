@@ -31,6 +31,11 @@ declare global {
     username: string
   }
 
+  interface Build {
+    buildLog: string
+    status: string // TODO: define status types
+  }
+
   interface Commit {
     title: string
   }

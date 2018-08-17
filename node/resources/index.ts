@@ -1,10 +1,12 @@
 import { VBase } from '@vtex/api'
 import { parse as parseCookie } from 'cookie'
 import { head, pickBy, values} from 'ramda'
+import Builds from './builds'
 import DeloreanClient from './deloreanClient'
 import KotoClient from './kotoClient'
 
 export default class Resources {
+  public builds: Builds
   public clientAuthToken: string
   public deloreanClient: DeloreanClient
   public kotoClient: KotoClient
@@ -18,5 +20,6 @@ export default class Resources {
     this.vbase = new VBase(ctx.vtex)
     this.deloreanClient = new DeloreanClient(ctx.vtex)
     this.kotoClient = new KotoClient(ctx.vtex, this.vbase, token)
+    this.builds = new Builds(this.vbase)
   }
 }
