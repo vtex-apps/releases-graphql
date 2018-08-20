@@ -32,6 +32,8 @@ declare global {
   }
 
   interface Build {
+    buildId?: String
+    cacheId?: String
     buildLog: string
     status: string // TODO: define status types
   }

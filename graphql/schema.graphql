@@ -4,6 +4,13 @@ type Author {
   username: String
 }
 
+type Build {
+  buildId: String
+  cacheId: String
+  buildLog: String
+  status: String
+}
+
 type Commit {
   title: String
 }
@@ -54,10 +61,12 @@ type Statistic {
 }
 
 type Mutation {
-  saveBuildResults(appId: String, build: String, buildId: String, commitId: String, log: String status: String): String
+  saveBuildResults(appId: String,  commitId: String, buildId: String, build: String, log: String status: String): String
 }
 
 type Query {
+  buildResults(appId: String, commitId: String, buildId: String): Build
+  buildResultsFromCommit(appId: String, commitId: String): [Build]
   projects: [Project]
   releaseDetails(appName: String, cacheId: String): Release
   releases(appName: String = "", page: Int = 1, endDate: String = ""): [Release] @cacheControl(scope: PRIVATE)

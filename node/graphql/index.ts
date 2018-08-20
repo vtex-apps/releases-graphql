@@ -1,3 +1,5 @@
+import buildResults from '../resolvers/buildResults'
+import buildResultsFromCommit from '../resolvers/buildResultsFromCommit'
 import projects from '../resolvers/projects'
 import releaseDetails from '../resolvers/releaseDetails'
 import releases from '../resolvers/releases'
@@ -10,6 +12,8 @@ export const resolvers = {
     saveBuildResults
   },
   Query: {
+    buildResults,
+    buildResultsFromCommit,
     projects,
     releaseDetails,
     releases,
