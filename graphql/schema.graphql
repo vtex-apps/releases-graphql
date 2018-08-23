@@ -13,6 +13,12 @@ type Dependency {
   version: String
 }
 
+type Profile {
+  id: String
+  name: String
+  email: String
+}
+
 type Project {
   name: String
 }
@@ -54,9 +60,10 @@ type Statistic {
 }
 
 type Query {
-  projects: [Project]
+  profile: Profile @cacheControl(scope: PRIVATE)
+  projects: [Project] @cacheControl(scope: PRIVATE)
   releaseDetails(appName: String, cacheId: String): Release @cacheControl(scope: PRIVATE)
   releases(appName: String = "", page: Int = 1, endDate: String = ""): [Release] @cacheControl(scope: PRIVATE)
   releasesNotes(page: Int = 1): [ReleaseNote]
-  statistic(appName: String = ""): Statistic
+  statistic(appName: String = ""): Statistic @cacheControl(scope: PRIVATE)
 }

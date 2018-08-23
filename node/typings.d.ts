@@ -63,6 +63,12 @@ declare global {
     Version: string
   }
 
+  interface Profile {
+    id: string
+    name: string
+    email: string
+  }
+
   interface Publication {
     _id: string,
     app: string,

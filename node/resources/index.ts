@@ -15,6 +15,9 @@ export default class Resources {
     const parsedCookies = parseCookie(cookies)
     const startsWithVtexId = (_, key) => key.startsWith('VtexIdclientAutCookie')
     const token = head(values(pickBy(startsWithVtexId, parsedCookies)))
+    if (!token) {
+      throw new Error()
+    }
 
     this.vbase = new VBase(ctx.vtex)
     this.deloreanClient = new DeloreanClient(ctx.vtex)

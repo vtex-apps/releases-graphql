@@ -21,6 +21,12 @@
       "name": "vbase-read-write"
     },
     {
+      "name": "read-workspace-apps"
+    },
+    {
+      "name": "read-public-registry-assets"
+    },
+    {
       "name": "outbound-access",
       "attrs": {
         "host": "koto.vtex.com",
@@ -53,6 +59,13 @@
       "attrs": {
         "host": "vtexid.vtex.com.br",
         "path": "/api/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexcommercestable.com.br",
+        "path": "/api/license_manager/*"
       }
     }
   ]
