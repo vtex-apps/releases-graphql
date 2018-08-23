@@ -29,4 +29,19 @@ export default class DeloreanClient {
       return []
     }
   }
+
+  public async getStatistic(env: string, app?: string): Promise<Statistic> {
+    try {
+      const requestParams = [ '', 'all' ].includes(env)
+        ? { app }
+        : { env, app }
+      const response = await this.client.get('/publications/totalizers', { params: requestParams })
+
+      return response.data
+    } catch (e) {
+      console.log(e)
+
+      return null
+    }
+  }
 }
