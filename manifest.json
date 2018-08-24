@@ -1,7 +1,7 @@
 {
   "name": "releases-graphql",
   "vendor": "vtex",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "title": "Releases Graphql",
   "description": "VTEX Releases GraphQL server",
   "mustUpdateAt": "2019-08-09",
@@ -19,6 +19,12 @@
   "policies": [
     {
       "name": "vbase-read-write"
+    },
+    {
+      "name": "read-workspace-apps"
+    },
+    {
+      "name": "read-public-registry-assets"
     },
     {
       "name": "outbound-access",
@@ -53,6 +59,13 @@
       "attrs": {
         "host": "vtexid.vtex.com.br",
         "path": "/api/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexcommercestable.com.br",
+        "path": "/api/license_manager/*"
       }
     }
   ]

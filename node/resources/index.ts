@@ -11,9 +11,13 @@ export default class Resources {
   public vbase: VBase
 
   constructor(ctx: ColossusContext) {
-    const parsedCookies = parseCookie(ctx.request.header.cookie)
+    const cookies = ctx.request.header.cookie ? ctx.request.header.cookie : ''
+    const parsedCookies = parseCookie(cookies)
     const startsWithVtexId = (_, key) => key.startsWith('VtexIdclientAutCookie')
     const token = head(values(pickBy(startsWithVtexId, parsedCookies)))
+    if (!token) {
+      throw new Error()
+    }
 
     this.vbase = new VBase(ctx.vtex)
     this.deloreanClient = new DeloreanClient(ctx.vtex)

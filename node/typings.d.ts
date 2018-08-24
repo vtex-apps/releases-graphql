@@ -63,6 +63,12 @@ declare global {
     Version: string
   }
 
+  interface Profile {
+    id: string
+    name: string
+    email: string
+  }
+
   interface Publication {
     _id: string,
     app: string,
@@ -108,15 +114,12 @@ declare global {
     PreReleaseLast30Days: number
   }
 
+
   interface Statistic {
-    stableLastHour: number,
-    stableLast3Hours: number,
-    stableLast7Days: number,
-    stableLast30Days: number,
-    preReleaseLastHour: number,
-    preReleaseLast3Hours: number,
-    preReleaseLast7Days: number,
-    preReleaseLast30Days: number
+    lastHour: number,
+    last3Hour: number,
+    last7Days: number,
+    last30Days: number
   }
 
   interface Project {

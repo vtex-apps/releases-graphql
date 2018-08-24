@@ -13,6 +13,12 @@ type Dependency {
   version: String
 }
 
+type Profile {
+  id: String
+  name: String
+  email: String
+}
+
 type Project {
   name: String
 }
@@ -43,20 +49,17 @@ type ReleaseNote {
 }
 
 type Statistic {
-  stableLastHour: Int,
-  stableLast3Hours: Int,
-  stableLast7Days: Int,
-  stableLast30Days: Int,
-  preReleaseLastHour: Int,
-  preReleaseLast3Hours: Int,
-  preReleaseLast7Days: Int,
-  preReleaseLast30Days: Int
+  lastHour: Int
+  last3Hours: Int
+  last7Days: Int
+  last30Days: Int
 }
 
 type Query {
-  projects: [Project]
-  releaseDetails(appName: String, cacheId: String): Release
+  profile: Profile @cacheControl(scope: PRIVATE)
+  projects: [Project] @cacheControl(scope: PRIVATE)
+  releaseDetails(appName: String, cacheId: String): Release @cacheControl(scope: PRIVATE)
   releases(appName: String = "", page: Int = 1, endDate: String = ""): [Release] @cacheControl(scope: PRIVATE)
   releasesNotes(page: Int = 1): [ReleaseNote]
-  statistic(appName: String = ""): Statistic
+  statistic(appName: String = "", env: String = ""): Statistic @cacheControl(scope: PRIVATE)
 }
