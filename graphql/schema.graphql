@@ -1,0 +1,62 @@
+type Author {
+  gravatarURL: String
+  name: String
+  username: String
+}
+
+type Commit {
+  title: String
+}
+
+type Dependency {
+  name: String,
+  version: String
+}
+
+type Project {
+  name: String
+}
+
+type Release {
+  authors: [Author],
+  appName: String,
+  commits: [Commit],
+  commitsTotal: Int,
+  cacheId: String,
+  date: String,
+  dependencies: [Dependency],
+  environment: String,
+  type: String,
+  version: String,
+  versionFrom: String
+}
+
+type ReleaseNote {
+  appName: String
+  author: Author
+  date: String
+  description: String
+  cacheId: String
+  title: String
+  url: String
+  version: String
+}
+
+type Statistic {
+  stableLastHour: Int,
+  stableLast3Hours: Int,
+  stableLast7Days: Int,
+  stableLast30Days: Int,
+  preReleaseLastHour: Int,
+  preReleaseLast3Hours: Int,
+  preReleaseLast7Days: Int,
+  preReleaseLast30Days: Int
+}
+
+type Query {
+  projects: [Project]
+  releaseDetails(appName: String, cacheId: String): Release
+  releases(appName: String = "", page: Int = 1, endDate: String = ""): [Release] @cacheControl(scope: PRIVATE)
+  releasesNotes(page: Int = 1): [ReleaseNote]
+  statistic(appName: String = ""): Statistic
+}
