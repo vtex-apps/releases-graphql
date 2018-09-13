@@ -9,7 +9,7 @@ interface ReleaseDetailArgs {
 export default async (_, args: ReleaseDetailArgs, ctx: ColossusContext): Promise<Release> => {
   const resources = new Resources(ctx)
   const { appName, cacheId } = args
-  const id = cacheId.split('-')[1]
+  const [__, id] = cacheId.split('-')
   const deployment = await resources.kotoClient.getDeployment(appName, id)
 
   const commits: Commit[] = map((commitFromKoto: CommitFromKoto) => {

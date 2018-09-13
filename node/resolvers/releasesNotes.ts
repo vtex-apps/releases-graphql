@@ -5,14 +5,17 @@ interface ReleasesNotesArgs {
   page: number
 }
 
+const DEFAULT_PAGE = 1
+const DEFAULT_PER_PAGE = 10
+
 export default async (_, args: ReleasesNotesArgs, ctx: ColossusContext): Promise<ReleaseNote[]> => {
   const releaseNotesURL = 'http://rlsnts-env-stable.us-east-1.elasticbeanstalk.com/releases'
   const http = axios.create({ headers: { 'Proxy-Authorization': ctx.vtex.authToken } })
   const { page } = args
   const elements = await http.get(releaseNotesURL, {
     params: {
-      page: page ? page : 1,
-      perPage: 10
+      page: page ? page : DEFAULT_PAGE,
+      perPage: DEFAULT_PER_PAGE,
     }
   })
 
