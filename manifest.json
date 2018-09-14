@@ -15,6 +15,9 @@
     "graphql": "1.x",
     "node": "3.x"
   },
+  "scripts": {
+    "postreleasy": "vtex publish --verbose"
+  },
   "credentialType": "absolute",
   "policies": [
     {
