@@ -1,6 +1,8 @@
 import { VBase } from '@vtex/api'
-import { parse as parseCookie } from 'cookie'
-import { head, pickBy, values} from 'ramda'
+
+import { AuthenticationError } from '../errors/AuthenticationError'
+import { getTokenFromCookies } from '../utils/vtexid'
+
 import DeloreanClient from './deloreanClient'
 import KotoClient from './kotoClient'
 
@@ -12,15 +14,14 @@ export default class Resources {
 
   constructor(ctx: ColossusContext) {
     const cookies = ctx.request.header.cookie ? ctx.request.header.cookie : ''
-    const parsedCookies = parseCookie(cookies)
-    const startsWithVtexId = (_, key) => key.startsWith('VtexIdclientAutCookie')
-    const token = head(values(pickBy(startsWithVtexId, parsedCookies)))
-    if (!token) {
-      throw new Error()
+    const VtexIdclientAutCookie = getTokenFromCookies(cookies)
+
+    if (!VtexIdclientAutCookie) {
+      throw new AuthenticationError()
     }
 
     this.vbase = new VBase(ctx.vtex)
     this.deloreanClient = new DeloreanClient(ctx.vtex)
-    this.kotoClient = new KotoClient(ctx.vtex, this.vbase, token)
+    this.kotoClient = new KotoClient(ctx.vtex, this.vbase, VtexIdclientAutCookie)
   }
 }
