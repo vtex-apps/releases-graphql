@@ -1,20 +1,20 @@
 import { map } from 'ramda'
-import Resources from '../resources'
 
 interface ReleaseDetailArgs {
   appName: string
   cacheId: string
 }
 
-export default async (_, args: ReleaseDetailArgs, ctx: ColossusContext): Promise<Release> => {
-  const resources = new Resources(ctx)
+export default async (_: any, args: ReleaseDetailArgs, ctx: Context): Promise<Release> => {
+  const { clients: { koto } } = ctx
+
   const { appName, cacheId } = args
-  const [__, id] = cacheId.split('-')
-  const deployment = await resources.kotoClient.getDeployment(appName, id)
+  const [, id] = cacheId.split('-')
+  const deployment = await koto.getDeployment(appName, id)
 
   const commits: Commit[] = map((commitFromKoto: CommitFromKoto) => {
     return { title: commitFromKoto.Title } as Commit
-  }, deployment.Commits)
+  }, deployment.Commits || [])
 
   const dependencies: Dependency[] = map((dependencyFromKoto: DependencyFromKoto) => {
     return { name: dependencyFromKoto.Name, version: dependencyFromKoto.Version }
@@ -30,7 +30,7 @@ export default async (_, args: ReleaseDetailArgs, ctx: ColossusContext): Promise
     dependencies,
     environment: deployment.IsPreRelease ? 'beta' : 'stable',
     type: 'deployment',
-    version: deployment.Version
+    version: deployment.Version,
   }
 
   return release

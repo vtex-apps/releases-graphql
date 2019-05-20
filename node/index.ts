@@ -1,22 +1,17 @@
-import { AppsSettings } from '@vtex/api'
-import { Context } from 'koa'
+import { Service, ServiceContext } from '@vtex/api'
+
+import { Clients } from './clients'
+import profile from './resolvers/profile'
+import projects from './resolvers/projects'
+import releaseDetails from './resolvers/releaseDetails'
+import releases from './resolvers/releases'
+import releasesNotes from './resolvers/releasesNotes'
+import statistic from './resolvers/statistics'
+
+const MEDIUM_TIMEOUT_MS = 5 * 1000
 
 declare global {
-
-  interface ColossusContext extends Context {
-    vtex: IOContext
-  }
-
-  interface IOContext {
-    account: string
-    workspace: string
-    production: boolean
-    authToken: string
-    userAgent: string
-    recorder?: any
-    region: string
-    route: string
-  }
+  type Context = ServiceContext<Clients>
 
   type ReleaseType = 'publication' | 'deployment'
 
@@ -126,3 +121,31 @@ declare global {
     name: string
   }
 }
+
+// Export a service that defines resolvers and clients' options
+export default new Service<Clients>({
+  clients: {
+    implementation: Clients,
+    options: {
+      default: {
+        retries: 1,
+        timeout: MEDIUM_TIMEOUT_MS,
+      },
+      releaseNotes: {
+        timeout: 15 * 1000,
+      },
+    },
+  },
+  graphql: {
+    resolvers: {
+      Query: {
+        profile,
+        projects,
+        releaseDetails,
+        releases,
+        releasesNotes,
+        statistic,
+      },
+    },
+  },
+})
