@@ -1,7 +1,7 @@
 {
   "name": "releases-graphql",
   "vendor": "vtex",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "title": "Releases Graphql",
   "description": "VTEX Releases GraphQL server",
   "mustUpdateAt": "2019-08-09",
