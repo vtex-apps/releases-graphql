@@ -8,7 +8,7 @@ import releases from './resolvers/releases'
 import releasesNotes from './resolvers/releasesNotes'
 import statistic from './resolvers/statistics'
 
-const MEDIUM_TIMEOUT_MS = 2 * 1000
+const MEDIUM_TIMEOUT_MS = 5 * 1000
 
 declare global {
   type Context = ServiceContext<Clients>

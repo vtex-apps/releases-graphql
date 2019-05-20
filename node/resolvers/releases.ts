@@ -50,7 +50,7 @@ export default async (_: any, args: ReleasesArgs, ctx: Context): Promise<Release
     const author: Author = {
       gravatarURL: 'https://www.gravatar.com/avatar/' + Md5.hashStr(publication.vtexIdUser) + '?s=40',
       name: publication.vtexIdUser,
-      username: publication.vtexIdUser
+      username: publication.vtexIdUser,
     }
     const publicationDate = new Date(publication.created_at)
 
