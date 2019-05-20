@@ -5,7 +5,6 @@
   "title": "Releases Graphql",
   "description": "VTEX Releases GraphQL server",
   "mustUpdateAt": "2019-08-09",
-  "categories": [],
   "builders": {
     "graphql": "1.x",
     "node": "4.x"
