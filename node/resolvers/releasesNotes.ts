@@ -7,7 +7,11 @@ interface ReleasesNotesArgs {
 export default async (_: any, args: ReleasesNotesArgs, ctx: Context): Promise<ReleaseNote[]> => {
   const { clients: { releaseNotes } } = ctx
   const { page } = args
-  const { items } = await releaseNotes.getReleaseNotes(page)
+  const data = await releaseNotes.getReleaseNotes(page)
+
+  if (data.status === 'Fetch in progress') {
+    return []
+  }
 
   const notes = map((item: any) => {
     const author = {
@@ -25,7 +29,7 @@ export default async (_: any, args: ReleasesNotesArgs, ctx: Context): Promise<Re
       url: item.html_url,
       version: item.tag_name,
     } as ReleaseNote
-  }, items) as ReleaseNote[]
+  }, data.items || []) as ReleaseNote[]
 
   return notes
 }

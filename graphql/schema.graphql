@@ -60,6 +60,6 @@ type Query {
   projects: [Project] @cacheControl(scope: PRIVATE)
   releaseDetails(appName: String, cacheId: String): Release @cacheControl(scope: PRIVATE)
   releases(appName: String = "", page: Int = 1, endDate: String = ""): [Release] @cacheControl(scope: PRIVATE)
-  releasesNotes(page: Int = 1): [ReleaseNote]
+  releasesNotes(page: Int = 1): [ReleaseNote] @cacheControl(scope: PRIVATE)
   statistic(appName: String = "", env: String = ""): Statistic @cacheControl(scope: PRIVATE)
 }

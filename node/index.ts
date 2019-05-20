@@ -131,6 +131,9 @@ export default new Service<Clients>({
         retries: 1,
         timeout: MEDIUM_TIMEOUT_MS,
       },
+      releaseNotes: {
+        timeout: 15 * 1000,
+      },
     },
   },
   graphql: {
@@ -141,8 +144,8 @@ export default new Service<Clients>({
         releaseDetails,
         releases,
         releasesNotes,
-        statistic
-      }
+        statistic,
+      },
     },
   },
 })
