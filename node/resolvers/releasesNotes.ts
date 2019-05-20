@@ -1,29 +1,18 @@
-import axios from 'axios'
 import { map } from 'ramda'
 
 interface ReleasesNotesArgs {
   page: number
 }
 
-const DEFAULT_PAGE = 1
-const DEFAULT_PER_PAGE = 10
-
-export default async (_, args: ReleasesNotesArgs, ctx: ColossusContext): Promise<ReleaseNote[]> => {
-  const releaseNotesURL = 'http://rlsnts-env-stable.us-east-1.elasticbeanstalk.com/releases'
-  const http = axios.create({ headers: { 'Proxy-Authorization': ctx.vtex.authToken } })
+export default async (_: any, args: ReleasesNotesArgs, ctx: Context): Promise<ReleaseNote[]> => {
+  const { clients: { releaseNotes } } = ctx
   const { page } = args
-  const elements = await http.get(releaseNotesURL, {
-    params: {
-      page: page ? page : DEFAULT_PAGE,
-      perPage: DEFAULT_PER_PAGE,
-    }
-  })
+  const { items } = await releaseNotes.getReleaseNotes(page)
 
-  const { data: { items } } = elements
   const notes = map((item: any) => {
     const author = {
       gravatarURL: item.author.avatar_url,
-      username: item.author.login
+      username: item.author.login,
     } as Author
 
     return {
@@ -34,7 +23,7 @@ export default async (_, args: ReleasesNotesArgs, ctx: ColossusContext): Promise
       description: item.body,
       title: item.name,
       url: item.html_url,
-      version: item.tag_name
+      version: item.tag_name,
     } as ReleaseNote
   }, items) as ReleaseNote[]
 

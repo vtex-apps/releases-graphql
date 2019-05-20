@@ -1,10 +1,8 @@
 import { map } from 'ramda'
-import Resources from '../resources'
 
-export default async (_, __, ctx: ColossusContext): Promise<Project[]> => {
-  const resources = new Resources(ctx)
-  const projectsFromKoto = await resources.kotoClient.getProjects()
-
+export default async (_: any, __: any, ctx: Context): Promise<Project[]> => {
+  const { clients: { koto } } = ctx
+  const projectsFromKoto = await koto.getProjects()
   const projects = map((projectName: string) => {
     return { name: projectName } as Project
   }, projectsFromKoto)
